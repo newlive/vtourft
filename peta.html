@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>FT UNY Digital MAP</title>
+	<link rel="stylesheet" href="assets/css/jquery.mobile-1.3.0.min.css"/>
+        <script src="assets/js/cordova-2.5.0.js"></script>
+        <script src="assets/js/jquery-1.9.1.min.js"></script>
+        <script src="assets/js/jquery.mobile-1.3.0.min.js"></script>
+        <script src="assets/js/infobubble.js"></script>
+        <script src="menu.js"></script>
+        <script src="config.js"></script>
+</head>
+<body>
+	<div data-role="page" class="ui-responsive-panel" data-theme="c">
+            <div data-role="header" data-theme="a" data-position="fixed">
+                <h1>MAP</h1>
+                <a href="#menu-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+                
+            </div>
+            <div data-role="content"> 
+                <div id="map-canvas" style="position:absolute; left:0px; right:0px; top:0px; bottom:0px; width:100%; background: url('assets/img/ajax-loader.gif'); background-size:42px 42px; background-repeat: no-repeat; background-position: center;"></div>
+            </div>
+            <div data-role="footer" data-theme="a" data-position="fixed">
+                <h4>FT UNY Digital Map</h4>
+            </div>
+            <div data-role="panel" data-position-fixed="true" data-theme="a" id="menu-panel">
+                <ul id="menu" data-role="listview" data-theme="a"></ul>
+            </div>
+            <div data-role="panel" data-position="right" data-theme="a" id="info-panel">
+                <ul id="myfriends" data-role="listview" data-theme="a" data-filter="true"></ul>
+            </div>
+        </div>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript">
+                $(document).ready(function () {
+                    getMenu();
+                });
+                $(function() {
+                    if(navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(position){
+                                initialize(position.coords.latitude,position.coords.longitudez);
+
+                        },
+                    function showError(error)
+                    {
+                    switch(error.code) 
+                      {
+                      case error.PERMISSION_DENIED:
+                        alert("Anda membatalkan penggunaan GPS");
+                        initialize(-7.769184,110.388106);
+                        break;
+                      case error.POSITION_UNAVAILABLE:
+                        alert("Informasi posisi tidak tersedia");
+                        initialize(-7.769184,110.388106);
+                        break;
+                      case error.TIMEOUT:
+                        alert("GPS tidak merespon");
+                        initialize(-7.769184,110.388106);
+                        break;
+                      case error.UNKNOWN_ERROR:
+                        alert("Kesalahan sistem");
+                        initialize(-7.769184,110.388106);
+                        break;
+                      }
+                    });
+                    } 
+		});
+		
+	</script>
+</body>
+</html>

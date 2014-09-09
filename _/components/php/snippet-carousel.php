@@ -47,8 +47,8 @@
 	<form class="col-sm-4" id="searchForm">
 	    <div class="form-group col-sm-8 col-sm-offset-4">
 	      <div class="input-group input-group-lg center-block">
-	        <input class="form-control" placeholder="Search" type="text">
-	        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+	        <input class="form-control" autocomplete="on" placeholder="Search" type="text">
+	        <span class="input-group-addon"><button class="glyphicon glyphicon-search btn btn-danger" type="button"></button></span>
 	      </div>
 	    </div>
   	</form>

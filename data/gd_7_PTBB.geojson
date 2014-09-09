@@ -1,0 +1,1 @@
+{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"nama_gdg":"Gedung PTBB","jum_lantai":3,"id":7},"geometry":{"type":"Point","coordinates":[110.38748681545256,-7.7689018658539455]}},{"type":"Feature","properties":{"id":7,"nama_gdg":"Gedung PTBB","jum_lantai":3},"geometry":{"type":"Point","coordinates":[110.38774967193602,-7.768492596798585]}}]}
