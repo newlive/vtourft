@@ -50,11 +50,11 @@ function sidebarClick(id) {
   map.addLayer(theaterLayer).addLayer(museumLayer);
   var layer = markerClusters.getLayer(id);
   markerClusters.zoomToShowLayer(layer, function() {
-    map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 17);
+    map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 19);
     layer.fire("click");
   });
   /* Hide sidebar and go to the map on small screens */
-  if (document.body.clientWidth <= 767) {
+  if (document.body.clientWidth <= 7904) {
     $("#sidebar").hide();
     map.invalidateSize();
   }
@@ -386,7 +386,7 @@ var gdg1 = L.geoJson(null, {
       gd01Search.push({
         nama: layer.feature.properties.nama_gdg,
         jumlah: layer.feature.properties.jum_lantai,
-        source: "gdg1",
+        source: "Gdg1",
         id: L.stamp(layer),
         lat: layer.feature.geometry.coordinates[1],
         lng: layer.feature.geometry.coordinates[0]
@@ -809,7 +809,7 @@ var gdg10 = L.geoJson(null, {
       gd10Search.push({
         nama: layer.feature.properties.nama_gdg,
         jumlah: layer.feature.properties.jum_lantai,
-        source: "gdg10",
+        source: "Gdg10",
         id: L.stamp(layer),
         lat: layer.feature.geometry.coordinates[1],
         lng: layer.feature.geometry.coordinates[0]
@@ -856,7 +856,7 @@ var gdg11 = L.geoJson(null, {
       gd11Search.push({
         nama: layer.feature.properties.nama_gdg,
         jumlah: layer.feature.properties.jum_lantai,
-        source: "gdg11",
+        source: "Gdg11",
         id: L.stamp(layer),
         lat: layer.feature.geometry.coordinates[1],
         lng: layer.feature.geometry.coordinates[0]
@@ -1055,8 +1055,8 @@ var groupedOverlays = {
 
   },
   "Wilayah": {
-    "Boroughs": boroughs,
-    "Subway Lines": subwayLines,
+    // "Boroughs": boroughs,
+    // "Subway Lines": subwayLines,
     "Wilayah":wilayah
   }
 };
@@ -1108,15 +1108,115 @@ $(document).one("ajaxStop", function () {
     limit: 10
   });
 
-  // var gdg1BH = new Bloodhound({
-  //   name: "gdg1",
-  //   datumTokenizer: function (d) {
-  //     return Bloodhound.tokenizers.whitespace(d.name);
-  //   },
-  //   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  //   local: gd01Search,
-  //   limit: 10
-  // });
+  var gdg1BH = new Bloodhound({
+    name: "Gdg1",
+    datumTokenizer: function (d) {
+      return Bloodhound.tokenizers.whitespace(d.nama);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: gd01Search,
+    limit: 10
+  });
+
+  var gdg2BH = new Bloodhound({
+    name: "Gdg2",
+    datumTokenizer: function (d) {
+      return Bloodhound.tokenizers.whitespace(d.nama);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: gd02Search,
+    limit: 10
+  });
+
+  var gdg3BH = new Bloodhound({
+    name: "Gdg3",
+    datumTokenizer: function (d) {
+      return Bloodhound.tokenizers.whitespace(d.nama);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: gd03Search,
+    limit: 10
+  });
+
+var gdg4BH = new Bloodhound({
+    name: "Gdg4",
+    datumTokenizer: function (d) {
+      return Bloodhound.tokenizers.whitespace(d.nama);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: gd04Search,
+    limit: 10
+  });
+
+var gdg5BH = new Bloodhound({
+    name: "Gdg5",
+    datumTokenizer: function (d) {
+      return Bloodhound.tokenizers.whitespace(d.nama);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: gd05Search,
+    limit: 10
+  });
+
+var gdg6BH = new Bloodhound({
+    name: "Gdg6",
+    datumTokenizer: function (d) {
+      return Bloodhound.tokenizers.whitespace(d.nama);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: gd06Search,
+    limit: 10
+  });
+
+var gdg7BH = new Bloodhound({
+    name: "Gdg7",
+    datumTokenizer: function (d) {
+      return Bloodhound.tokenizers.whitespace(d.nama);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: gd07Search,
+    limit: 10
+  });
+
+var gdg8BH = new Bloodhound({
+    name: "Gdg8",
+    datumTokenizer: function (d) {
+      return Bloodhound.tokenizers.whitespace(d.nama);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: gd08Search,
+    limit: 10
+  });
+
+var gdg9BH = new Bloodhound({
+    name: "Gdg9",
+    datumTokenizer: function (d) {
+      return Bloodhound.tokenizers.whitespace(d.nama);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: gd09Search,
+    limit: 10
+  });
+
+var gdg10BH = new Bloodhound({
+    name: "Gdg10",
+    datumTokenizer: function (d) {
+      return Bloodhound.tokenizers.whitespace(d.nama);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: gd10Search,
+    limit: 10
+  });
+
+var gdg11BH = new Bloodhound({
+    name: "Gdg11",
+    datumTokenizer: function (d) {
+      return Bloodhound.tokenizers.whitespace(d.nama);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: gd11Search,
+    limit: 10
+  });
 
   var geonamesBH = new Bloodhound({
     name: "GeoNames",
@@ -1152,21 +1252,20 @@ $(document).one("ajaxStop", function () {
   theatersBH.initialize();
   museumsBH.initialize();
   geonamesBH.initialize();
-  // gdg1BH.initialize();
-  // gdg2BH.initialize();
-  // gdg3BH.initialize();
-  // gdg4BH.initialize();
-  // gdg5BH.initialize();
-  // gdg6BH.initialize();
-  // gdg7BH.initialize();
-  // gdg8BH.initialize();
-  // gdg9BH.initialize();
-  // gdg10BH.initialize();
-  // gdg11BH.initialize();
-
+  gdg1BH.initialize();
+  gdg2BH.initialize();
+  gdg3BH.initialize();
+  gdg4BH.initialize();
+  gdg5BH.initialize();
+  gdg6BH.initialize();
+  gdg7BH.initialize();
+  gdg8BH.initialize();
+  gdg9BH.initialize();
+  gdg10BH.initialize();
+  gdg11BH.initialize();
 
   /* instantiate the typeahead UI */
-  $("#sarchbox").typeahead({
+  $("#searchbox").typeahead({
     minLength: 3,
     highlight: true,
     hint: false
@@ -1193,14 +1292,94 @@ $(document).one("ajaxStop", function () {
       header: "<h4 class='typeahead-header'><img src='assets/img/museum.png' width='24' height='28'>&nbsp;Museums</h4>",
       suggestion: Handlebars.compile(["{{name}}<br>&nbsp;<small>{{address}}</small>"].join(""))
     }
-  // }, {
-  // name: "gdg1",
-  // displayKey: "nama_gdg",
-  // source: gdg1BH.ttAdapter(),
-  // templates: {
-  //   header: "<h4 class='typeahead-header'><img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung LPTK</h4>",
-  //   suggestion: Handlebars.compile(["{{nama_gdg}}<br>&nbsp;<small>{{jum_lantai}}</small>"].join(""))
-  //   }
+  }, {
+  name: "gdg1",
+  displayKey: "nama_gdg",
+  source: gdg1BH.ttAdapter(),
+  templates: {
+    header: "<h4 class='typeahead-header'><img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung LPTK</h4>",
+    suggestion: Handlebars.compile(["{{nama}}<br>&nbsp;<small>{{jumlah}}</small>"].join(""))
+    }
+  }, {
+  name: "gdg2",
+  displayKey: "nama_gdg",
+  source: gdg2BH.ttAdapter(),
+  templates: {
+    header: "<h4 class='typeahead-header'><img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Media</h4>",
+    suggestion: Handlebars.compile(["{{nama}}<br>&nbsp;<small>{{jumlah}}</small>"].join(""))
+    }
+  }, {
+  name: "gdg3",
+  displayKey: "nama_gdg",
+  source: gdg3BH.ttAdapter(),
+  templates: {
+    header: "<h4 class='typeahead-header'><img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Aula Teather</h4>",
+    suggestion: Handlebars.compile(["{{nama}}<br>&nbsp;<small>{{jumlah}}</small>"].join(""))
+    }
+  }, {
+  name: "gdg4",
+  displayKey: "nama_gdg",
+  source: gdg4BH.ttAdapter(),
+  templates: {
+    header: "<h4 class='typeahead-header'><img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Elektro/Elektronika</h4>",
+    suggestion: Handlebars.compile(["{{nama}}<br>&nbsp;<small>{{jumlah}}</small>"].join(""))
+    }
+  }, {
+  name: "gdg5",
+  displayKey: "nama_gdg",
+  source: gdg5BH.ttAdapter(),
+  templates: {
+    header: "<h4 class='typeahead-header'><img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Mesin/Otomotif</h4>",
+    suggestion: Handlebars.compile(["{{nama}}<br>&nbsp;<small>{{jumlah}}</small>"].join(""))
+    }
+  }, {
+  name: "gdg6",
+  displayKey: "nama_gdg",
+  source: gdg6BH.ttAdapter(),
+  templates: {
+    header: "<h4 class='typeahead-header'><img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Sipil dan Perencanaan</h4>",
+    suggestion: Handlebars.compile(["{{nama}}<br>&nbsp;<small>{{jumlah}}</small>"].join(""))
+    }
+  }, {
+  name: "gdg7",
+  displayKey: "nama_gdg",
+  source: gdg7BH.ttAdapter(),
+  templates: {
+    header: "<h4 class='typeahead-header'><img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung PTBB</h4>",
+    suggestion: Handlebars.compile(["{{nama}}<br>&nbsp;<small>{{jumlah}}</small>"].join(""))
+    }
+  }, {
+  name: "gdg8",
+  displayKey: "nama_gdg",
+  source: gdg8BH.ttAdapter(),
+  templates: {
+    header: "<h4 class='typeahead-header'><img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Lain-lain</h4>",
+    suggestion: Handlebars.compile(["{{nama}}<br>&nbsp;<small>{{jumlah}}</small>"].join(""))
+    }
+  }, {
+  name: "gdg9",
+  displayKey: "nama_gdg",
+  source: gdg9BH.ttAdapter(),
+  templates: {
+    header: "<h4 class='typeahead-header'><img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung KPLT</h4>",
+    suggestion: Handlebars.compile(["{{nama}}<br>&nbsp;<small>{{jumlah}}</small>"].join(""))
+    }
+  }, {
+  name: "gdg10",
+  displayKey: "nama_gdg",
+  source: gdg10BH.ttAdapter(),
+  templates: {
+    header: "<h4 class='typeahead-header'><img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung RF</h4>",
+    suggestion: Handlebars.compile(["{{nama}}<br>&nbsp;<small>{{jumlah}}</small>"].join(""))
+    }
+  }, {
+  name: "gdg11",
+  displayKey: "nama_gdg",
+  source: gdg11BH.ttAdapter(),
+  templates: {
+    header: "<h4 class='typeahead-header'><img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung PKM</h4>",
+    suggestion: Handlebars.compile(["{{nama}}<br>&nbsp;<small>{{jumlah}}</small>"].join(""))
+    }
   }, {
     name: "GeoNames",
     displayKey: "name",
@@ -1212,14 +1391,11 @@ $(document).one("ajaxStop", function () {
     if (datum.source === "Boroughs") {
       map.fitBounds(datum.bounds);
     }
-    // if (datum.source === "wilayah") {
-    //   map.fitBounds(datum.bounds);
-    // }
     if (datum.source === "Theaters") {
       if (!map.hasLayer(theaterLayer)) {
         map.addLayer(theaterLayer);
       }
-      map.setView([datum.lat, datum.lng], 19);
+      map.setView([datum.lat, datum.lng], 17);
       if (map._layers[datum.id]) {
         map._layers[datum.id].fire("click");
       }
@@ -1228,20 +1404,111 @@ $(document).one("ajaxStop", function () {
       if (!map.hasLayer(museumLayer)) {
         map.addLayer(museumLayer);
       }
+      map.setView([datum.lat, datum.lng], 17);
+      if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
+      }
+    }
+
+    if (datum.source === "gdg1") {
+      if (!map.hasLayer(gdg01Layer)) {
+        map.addLayer(gdg01Layer);
+      }
       map.setView([datum.lat, datum.lng], 19);
       if (map._layers[datum.id]) {
         map._layers[datum.id].fire("click");
       }
     }
-    // if (datum.source === "gdg1") {
-    //   if (!map.hasLayer(gdg01Layer)) {
-    //     map.addLayer(gdg01Layer);
-    //   }
-    //   map.setView([datum.lat, datum.lng], 19);
-    //   if (map._layers[datum.id]) {
-    //     map._layers[datum.id].fire("click");
-    //   }
-    // }
+    if (datum.source === "gdg2") {
+      if (!map.hasLayer(gdg02Layer)) {
+        map.addLayer(gdg02Layer);
+      }
+      map.setView([datum.lat, datum.lng], 19);
+      if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
+      }
+    }
+    if (datum.source === "gdg3") {
+      if (!map.hasLayer(gdg03Layer)) {
+        map.addLayer(gdg03Layer);
+      }
+      map.setView([datum.lat, datum.lng], 19);
+      if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
+      }
+    }
+    if (datum.source === "gdg4") {
+      if (!map.hasLayer(gdg04Layer)) {
+        map.addLayer(gdg04Layer);
+      }
+      map.setView([datum.lat, datum.lng], 19);
+      if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
+      }
+    }
+    if (datum.source === "gdg5") {
+      if (!map.hasLayer(gdg05Layer)) {
+        map.addLayer(gdg05Layer);
+      }
+      map.setView([datum.lat, datum.lng], 19);
+      if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
+      }
+    }
+    if (datum.source === "gdg6") {
+      if (!map.hasLayer(gdg06Layer)) {
+        map.addLayer(gdg06Layer);
+      }
+      map.setView([datum.lat, datum.lng], 19);
+      if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
+      }
+    }
+    if (datum.source === "gdg7") {
+      if (!map.hasLayer(gdg07Layer)) {
+        map.addLayer(gdg07Layer);
+      }
+      map.setView([datum.lat, datum.lng], 19);
+      if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
+      }
+    }
+    if (datum.source === "gdg8") {
+      if (!map.hasLayer(gdg08Layer)) {
+        map.addLayer(gdg08Layer);
+      }
+      map.setView([datum.lat, datum.lng], 19);
+      if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
+      }
+    }
+    if (datum.source === "gdg9") {
+      if (!map.hasLayer(gdg09Layer)) {
+        map.addLayer(gdg09Layer);
+      }
+      map.setView([datum.lat, datum.lng], 19);
+      if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
+      }
+    }
+    if (datum.source === "gdg10") {
+      if (!map.hasLayer(gdg10Layer)) {
+        map.addLayer(gdg10Layer);
+      }
+      map.setView([datum.lat, datum.lng], 19);
+      if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
+      }
+    }
+    if (datum.source === "gdg11") {
+      if (!map.hasLayer(gdg11Layer)) {
+        map.addLayer(gdg11Layer);
+      }
+      map.setView([datum.lat, datum.lng], 19);
+      if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
+      }
+    }
     if (datum.source === "GeoNames") {
       map.setView([datum.lat, datum.lng], 14);
     }
