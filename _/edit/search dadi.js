@@ -1,4 +1,4 @@
-var map, featureList, boroughSearch = [], theaterSearch = [], museumSearch = [], gd01Search = [], gd02Search = [], gd03Search = [], gd04Search = [], gd05Search = [], gd06Search = [], gd07Search = [], gd08Search = [], gd09Search = [], gd10Search = [], gd11Search = []; //Edit 1
+var map, featureList, boroughSearch = [], theaterSearch = [], museumSearch = [], wilayahSearch = [], gd01Search = [], gd02Search = [], gd03Search = [], gd04Search = [], gd05Search = [], gd06Search = [], gd07Search = [], gd08Search = [], gd09Search = [], gd10Search = [], gd11Search = []; //Edit 1
 
 $(document).on("click", ".feature-row", function(e) {
   sidebarClick(parseInt($(this).attr('id')));
@@ -54,7 +54,7 @@ function sidebarClick(id) {
     layer.fire("click");
   });
   /* Hide sidebar and go to the map on small screens */
-  if (document.body.clientWidth <= 794) {
+  if (document.body.clientWidth <= 7904) {
     $("#sidebar").hide();
     map.invalidateSize();
   }
@@ -63,7 +63,6 @@ function sidebarClick(id) {
 /* Basemap Layers */
 var mapquestOSM = L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", {
   maxZoom: 19,
-  minZoom: 17,
   subdomains: ["otile1", "otile2", "otile3", "otile4"],
   attribution: 'Tiles courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">. Map data (c) <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> contributors, CC-BY-SA.'
 });
@@ -72,13 +71,11 @@ var mapquestOSM = L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.
 //   subdomains: ["oatile1", "oatile2", "oatile3", "oatile4"],
 //   attribution: 'Tiles courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>. Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency'
 // });
-
-
 var mapquestHYB = L.layerGroup([L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg", {
   maxZoom: 18,
   subdomains: ["oatile1", "oatile2", "oatile3", "oatile4"]
 }), L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/hyb/{z}/{x}/{y}.png", {
-  maxZoom: 18,
+  maxZoom: 19,
   subdomains: ["oatile1", "oatile2", "oatile3", "oatile4"],
   attribution: 'Labels courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">. Map data (c) <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> contributors, CC-BY-SA. Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency'
 })]);
@@ -86,70 +83,13 @@ var mapquestHYB = L.layerGroup([L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/sa
 /* Overlay Layers */
 var highlight = L.geoJson(null);
 
-//Layer Background
-
-var background = L.geoJson(null, {
-  style: function (feature) {
-    return {
-      fill: true,
-      color:"#7ec9b1",
-      fillOpacity: 1,
-      clickable: false,
-      stroke: "#FFFFFF"
-    };
-  }
-});
-$.getJSON("data/background.geojson", function (data) {
-  background.addData(data);
-});
-
-
-
-//Layer Gedung
-var gedong = L.geoJson(null, {
-  style: function (feature) {
-    return {
-      fill: true,
-      color:"#fa946e",
-      fillOpacity: 1,
-      clickable: false,
-      stroke: "#6c6c6c",
-      strokeWidth: 11
-    };
-  }
-});
-$.getJSON("data/gedong.geojson", function (data) {
-  gedong.addData(data);
-});
-
-//Layer jalan
-
-var jalanan = L.geoJson(null, {
-  style: function (feature) {
-    return {
-      fill: false,
-      color:"#ffffff",
-      clickable: false,
-      strokeOpacity: 1,
-      stroke: "#ffffff",
-      strokeWidth: 2
-    };
-  }
-});
-$.getJSON("data/jalan.geojson", function (data) {
-  jalanan.addData(data);
-});
-
-//Layer pembagian jurusan
-
 var boroughs = L.geoJson(null, {
   style: function (feature) {
     return {
+      color: "black",
       fill: false,
-      color:"black",
-      fillOpacity: 0.5,
-      clickable: false,
-      stroke: true
+      opacity: 1,
+      clickable: false
     };
   },
   onEachFeature: function (feature, layer) {
@@ -165,8 +105,27 @@ $.getJSON("data/boroughs.geojson", function (data) {
   boroughs.addData(data);
 });
 
-
-
+var wilayah = L.geoJson(null, {
+  style: function (feature) {
+    return {
+      color: "black",
+      fill: false,
+      opacity: 1,
+      clickable: false
+    };
+  },
+  onEachFeature: function (feature, layer) {
+    wilayahSearch.push({
+      name: layer.feature.properties.BoroName,
+      source: "wilayah",
+      id: L.stamp(layer),
+      bounds: layer.getBounds()
+    });
+  }
+});
+$.getJSON("data/wilayah.geojson", function (data) {
+  wilayah.addData(data);
+});
 
 /* subway*/
 var subwayLines = L.geoJson(null, {
@@ -911,9 +870,9 @@ $.getJSON("data/gd_11_PKM.geojson", function (data) {
 
 /*Map first location*/
 map = L.map("map", {
-  zoom: 18,
-  center: [-7.7702, 110.3876],
-  layers: [mapquestOSM,boroughs, background, gedong,jalanan, markerClusters, highlight],
+  zoom: 22,
+  center: [110.38771748542786, -7.7701163827156625],
+  layers: [mapquestOSM, wilayah, markerClusters, highlight],
   zoomControl: false,
   attributionControl: false
 });
@@ -1080,12 +1039,14 @@ var baseLayers = {
 
 var groupedOverlays = {
   "Daftar Gedung ": {
+    "<img src='assets/img/theater.png' width='24' height='28'>&nbsp;Teather": theaterLayer,
+    "<img src='assets/img/museum.png' width='24' height='28'>&nbsp;Gedung Aula Teather": museumLayer,
     "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung LPTK": gdg01Layer,
     "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Media": gdg02Layer,
     "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Aula Teather": gdg03Layer,
-    "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Elektro/Elektronika": gdg04Layer,
-    "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Mesin/Otomotif": gdg05Layer,
-    "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Sipil & Perencanaan": gdg06Layer,
+    "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Jurusan Elektro/Elektronika": gdg04Layer,
+    "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Jurusan Mesin/Otomotif": gdg05Layer,
+    "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Sipil dan Perencanaan": gdg06Layer,
     "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung PTBB": gdg07Layer,
     "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung Lain-lain": gdg08Layer,
     "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung KPLT": gdg09Layer,
@@ -1093,10 +1054,10 @@ var groupedOverlays = {
     "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Gedung PKM": gdg11Layer
 
   },
-  "Jurusan": {
-    "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Jurusan": boroughs
-    // "<img src='assets/img/building.png' width='24' height='28'>&nbsp;Background": background
-    
+  "Wilayah": {
+    // "Boroughs": boroughs,
+    // "Subway Lines": subwayLines,
+    "Wilayah":wilayah
   }
 };
 
@@ -1113,7 +1074,7 @@ $("#searchbox").click(function () {
 $(document).one("ajaxStop", function () {
   $("#loading").hide();
   /* Fit map to boroughs bounds */
-  // map.fitBounds(boroughs.getBounds());
+  map.fitBounds(wilayah.getBounds());
   featureList = new List("features", {valueNames: ["feature-name"]});
   featureList.sort("feature-name", {order:"asc"});
 
@@ -1313,7 +1274,7 @@ var gdg11BH = new Bloodhound({
     displayKey: "name",
     source: boroughsBH.ttAdapter(),
     templates: {
-      header: "<h4 class='typeahead-header'><img src='assets/img/theater.png' width='24' height='28'>&nbsp;Jurusan</h4>"
+      header: "<h4 class='typeahead-header'>Boroughs</h4>"
     }
   }, {
     name: "Theaters",
@@ -1564,4 +1525,3 @@ var gdg11BH = new Bloodhound({
   $(".twitter-typeahead").css("position", "static");
   $(".twitter-typeahead").css("display", "block");
 });
-
